@@ -1,0 +1,30 @@
+@startuml
+
+left to right direction
+
+actor shop
+actor user
+
+package 订单系统 {
+  usecase "常规订餐" as UC5
+  usecase "预定早餐" as UC1
+  usecase "预订午饭" as UC2
+  usecase "预定下午茶" as UC3
+  usecase "预定晚餐" as UC4
+}
+
+user -> 订单系统
+package 商家接单系统 {
+  usecase "常规接单" as UC6
+  usecase "早餐预订接单" as UC7
+  usecase "午餐预定接单" as UC8
+  usecase "下午茶预定接单" as UC9
+  usecase "晚餐预定接单" as UC10
+}
+
+
+shop.>UC1
+UC1.>UC7
+
+
+@enduml

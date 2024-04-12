@@ -1,0 +1,41 @@
+@startuml
+:用户: as user
+:商户: as shop
+:机器人: as robot
+
+note left
+一层大厅待命点
+end note
+
+user --> (小程序点餐支付)
+user -> (获取取餐码)
+(小程序点餐支付)<..(获取取餐码):extend
+shop --> (接收订单)
+(小程序点餐支付)<..(接收订单):extend
+shop --> (拣选打包)
+(接收订单)<..(拣选打包):include
+robot --> (取餐点)
+note left
+便利蜂门口
+end note
+shop --> (放入需要配送的商品)
+(拣选打包)<..(放入需要配送的商品):include
+(取餐点)<..(放入需要配送的商品):include
+robot --> (进行配送)
+(放入需要配送的商品)<..(进行配送):include
+robot --> (到达取餐站点)
+note left
+19层景行慧动会议室门口
+end note
+(进行配送)<..(到达取餐站点):include
+user -> (电话/短信通知取餐)
+(到达取餐站点)<..(电话/短信通知取餐):include
+user -> (输入取餐码取餐)
+(电话/短信通知取餐)<..(输入取餐码取餐):extend
+(获取取餐码)<..(输入取餐码取餐):include
+user -> (拿出商品)
+(输入取餐码取餐)<..(拿出商品):include
+robot -> (完成配送，返回取餐点)
+(拿出商品)<..(完成配送，返回取餐点):include
+
+@enduml

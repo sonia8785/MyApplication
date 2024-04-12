@@ -1,0 +1,39 @@
+@startuml
+:顾客A: as CA
+:顾客B: as CB
+:服务员: as W
+:机器人: as R
+(8号取餐牌) as num8
+(7号取餐牌) as num7
+(1号桌) as desk01
+(2号桌) as desk02
+(云端服务器) as service
+(客户终端) as C
+
+
+CA-> (点餐)
+CA-> (num8)
+CA-> (desk01)
+CA-> (service)
+(点餐) <..(num8)
+(num8) <.. (desk01)
+desk01 <.. service
+
+CB-> (点餐)
+CB-> (num7)
+CB-> (desk02)
+CB-> (service)
+点餐 <.. (num7)
+(num7) <.. (desk02)
+desk02 <.. service
+
+service ----> C
+C ----> W
+W ---> R
+
+note right of desk01 : 顾客A，8号取餐牌，1号桌.
+note right of desk02 : 顾客B，7号取餐牌，2号桌.
+note right of R:8号取餐牌，1号桌;7号取餐牌，2号桌.
+R ---> (desk01)
+R ---> (desk02)
+@enduml

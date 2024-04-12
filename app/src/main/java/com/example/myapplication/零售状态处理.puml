@@ -1,0 +1,12 @@
+@startuml
+User ---> (导航模式)
+robot --> (导航模式)
+robot-->(避让模式)
+User --> (挡住机器人导航形式路线)
+(导航模式)<..(挡住机器人导航形式路线):extend
+(挡住机器人导航形式路线)<..(静止服务模式):include
+(静止服务模式)<..(避让模式):extend
+
+note left of User : 商场消费者
+note left of robot:机器人
+@enduml

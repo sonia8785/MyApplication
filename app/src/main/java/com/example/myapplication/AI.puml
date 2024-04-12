@@ -1,0 +1,119 @@
+@startuml ai_diagram
+
+actor 智能客户端 as client
+participant 业务后台解析 as analyser
+participant 业务后台流程节点管理 as pnode
+participant 业务后台实体管理 as entity
+participant 业务后台插件或服务管理 as server
+participant 智能后台 as model
+participant V8或者v5或者第三方 as copilot
+
+
+copilot -> server:注册插件（插件功能，插件相关实体信息）
+activate server
+server -> entity:写入实体信息
+server -> pnode:注册节点
+deactivate
+client -> analyser: 输入用户会话
+note left
+    指令话束内容包含：
+    1.插件
+    2.插件相关实体参数
+end note
+
+activate analyser
+analyser ->analyser:进行特殊表达处理
+analyser ->model:输入上下文
+activate model
+model -> model:意图抽取
+model -> model:实体抽取
+model -> entity: 输入实体
+activate entity
+entity -> model: 返回实体验证结果
+deactivate
+
+model -> pnode:输入意图
+activate pnode
+pnode -> model:流程节点
+deactivate
+model -> model:创建业务流程
+note right
+    根据当前信息完整度以及服务范围：
+    1.企业对应的智能服务范围
+    2.当前用户对应的智能服务范围
+    进行智能流程节点规划
+end note
+model --> analyser:返回抽取结果：意图+流程+实体
+deactivate
+note right
+    返回意图+流程+实体
+    1.意图：进行调用插件判断
+    2.进行流程引导操作内容
+    3.实体：
+    （1）输入插件的信息
+    （2）缺失信息的输入提示
+end note
+
+analyser -> server:调用插件
+note left
+    根据返回的意图+流程+实体
+    进行插件调用并进行已知信息填充
+end note
+analyser --> client: 返回插件+内容补充提示
+deactivate
+activate client
+client -> analyser: 输入补充内容
+deactivate
+
+
+activate analyser
+analyser ->analyser :进行特殊表达处理
+analyser ->model:输入上下文
+activate model
+model -> model:补充内容抽取
+model -> model:实体信息完整性验证
+model -> model:流程调整
+model --> analyser:流程+提示
+deactivate
+
+analyser -> server: 进行调用（必填字段）
+deactivate
+activate server
+server -> copilot:进入应用流程
+deactivate
+
+activate copilot
+copilot --> analyser:流程状态
+deactivate
+
+activate analyser
+analyser--> client:流程操作提示
+deactivate
+
+activate client
+client -> analyser: 输入用户会话
+deactivate
+activate analyser
+analyser ->analyser :进行特殊表达处理
+analyser ->model:输入上下文
+activate model
+model -> model:补充内容抽取
+model -> model:实体信息完整性验证
+model -> model:流程调整
+model --> analyser:流程+提示
+deactivate
+
+analyser -> server: 进行调用（必填字段）
+deactivate
+activate server
+server -> copilot:进入应用流程
+deactivate
+
+activate copilot
+copilot --> analyser:流程状态
+deactivate
+
+activate analyser
+analyser--> client:流程操作提示
+deactivate
+@enduml

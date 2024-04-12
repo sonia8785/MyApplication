@@ -1,0 +1,56 @@
+@startuml
+:用户: as user
+:商户: as shop
+:机器人: as robot
+note left
+大厦门口取餐点
+end note
+:外卖员:as sever
+
+user --> (订购小程序下单)
+shop --> (接收订单)
+(订购小程序下单)<..(接收订单):extend
+shop --> (制作商品/打包)
+(接收订单)<..(制作商品/打包):include
+(制作商品/打包)<..(到店取餐):include
+sever --> (到店取餐)
+robot --> (机器人取餐点)
+sever --> (送餐到大厦门口)
+(到店取餐)<..(送餐到大厦门口):include
+sever --> (通知用户取餐)
+user --> (通知用户取餐)
+(送餐到大厦门口)<..(通知用户取餐):include
+note left
+告知外卖人员手机号
+让外卖员把东西放入到门口的机器人里面
+end note
+sever --> (机器人取餐点)
+(通知用户取餐)<..(机器人取餐点):include
+note left
+大厦门口
+end note
+sever --> (放入需要配送的商品)
+(机器人取餐点)<..(放入需要配送的商品):include
+robot --> (进行配送)
+(放入需要配送的商品)<..(进行配送):include
+robot --> (到达取餐站点)
+note left
+19层景行慧动会议室门口
+end note
+(进行配送)<..(到达取餐站点):include
+user -> (电话/短信通知取餐)
+robot -> (电话/短信通知取餐)
+(到达取餐站点)<..(电话/短信通知取餐):include
+user -> (输入取餐码取餐)
+note left
+用户手机尾号后四位
+end note
+(电话/短信通知取餐)<..(输入取餐码取餐):extend
+user -> (拿出商品)
+(输入取餐码取餐)<..(拿出商品):include
+robot -> (完成配送，返回待命点)
+(拿出商品)<..(完成配送，返回待命点):extend
+note left
+大厦一层待命点
+end note
+@enduml

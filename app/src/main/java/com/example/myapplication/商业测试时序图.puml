@@ -1,0 +1,32 @@
+@startuml
+
+
+新街高和 -> 商务: 物业提供基础资料
+
+
+note left
+1.人员数量
+2.商铺数量
+3.点单高峰期
+end note
+
+activate 商务
+9号机器人 --> 商务: 提供部署方案和勘察报告方案样例
+activate 商务
+商务 -> 9号机器人: 签署购买合同（一部梯改方案，两台设备，先支付一台费用）
+deactivate
+activate 9号机器人
+9号机器人 --> 商务:提供新街高和部署方案
+deactivate
+商务 --> 新街高和:确认部署方案和时间
+activate 新街高和
+商务 -> 9号机器人:同步部署时间
+activate 9号机器人
+9号机器人 --> 新街高和:进行部署
+deactivate
+deactivate
+9号机器人 --> 商务: 提供勘察报告等
+新街高和 ->商务: 商铺入住
+deactivate
+
+@enduml

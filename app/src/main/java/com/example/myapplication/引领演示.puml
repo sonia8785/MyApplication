@@ -1,0 +1,26 @@
+@startuml
+:用户: as user
+:机器人: as robot
+note left
+一层大厦门口待命点
+end note
+
+
+user --> (设置引领任务)
+robot --> (执行引领任务)
+robot --> (设置引领任务)
+(设置引领任务)<..(执行引领任务):extend
+robot --> (到达目的地)
+user --> (到达目的地)
+(执行引领任务)<..(到达目的地):extend
+note left
+19层景行慧动会议室门口
+end note
+
+robot -> (完成引领，返回待命点)
+(到达目的地)<..(完成引领，返回待命点):extend
+note left
+绕一圈，过程中感受避障
+到达19层待命点
+end note
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+:用户A: as user
+:用户B: as userb
+:平台: as platform
+:商铺: as shop
+
+shop--> (提交参与团购活动的商品)
+(发布平台团购活动)<..(提交参与团购活动的商品):include
+platform --> (发布平台团购活动)
+platform --> (筛选商家提交的商品)
+(提交参与团购活动的商品)<..(筛选商家提交的商品):include
+user --> (选择团购商品)
+(发布平台团购活动)<..(选择团购商品):extend
+user --> (下单支付)
+(选择团购商品)<..(下单支付):include
+userb -->(跟单)
+(下单支付)<..(跟单):extend
+user -->(账号得到返现)
+(跟单)<..(账号得到返现):extend
+@enduml
